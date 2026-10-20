@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 function NewTaskInput({
@@ -9,18 +8,24 @@ function NewTaskInput({
   const [text, setText] = useState("");
 
   function handleAdd() {
-    if (text.trim() === "") return;
+    const title = text.trim();
 
-    onAddTask(text);
+    if (title === "") return;
+
+    onAddTask(title);
     setText("");
   }
 
   return (
-    <div>
+    <div className="new-task-input">
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleAdd();
+        }}
         placeholder="Add a task..."
+        aria-label="New task title"
       />
       <button onClick={handleAdd}>Add</button>
     </div>
